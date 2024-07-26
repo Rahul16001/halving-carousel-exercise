@@ -1,32 +1,30 @@
 package com.epam.rd.autotasks;
-
 import java.util.ArrayDeque;
-import java.util.Scanner;
 
 public class DecrementingCarousel{
 
     static boolean isRunning;
-    static ArrayDeque<Integer> que;
+    static ArrayDeque<Integer> carousalQue;
     final int capacity;
     boolean doHalf;
     public DecrementingCarousel(int cap) {
-        isRunning = false;
-        que = new ArrayDeque<>();
+
+
+        carousalQue = new ArrayDeque<>();
         capacity = cap;
         doHalf = false;
     }
     public DecrementingCarousel(int cap,boolean doHalf) {
         isRunning = false;
-        que = new ArrayDeque<>();
+        carousalQue = new ArrayDeque<>();
         capacity = cap;
-        this.doHalf = true;
+        this.doHalf = doHalf;
     }
 
 
     public boolean addElement(int element){
-        if(isRunning || que.size() == capacity || element <= 0) return false;
-        if(que.offer(element)) return true;
-        return false;
+        if(isRunning || carousalQue.size() == capacity || element <= 0) return false;
+        return carousalQue.offer(element);
     }
 
     public CarouselRun run() {
@@ -35,10 +33,10 @@ public class DecrementingCarousel{
             isRunning = true;
             return new CarouselRun(capacity);
         }
-        else if(!isRunning && doHalf)
+        else if(!isRunning)
         {
             isRunning = true;
-            return new CarouselRun(capacity,doHalf);
+            return new CarouselRun(capacity, true);
         }
         else return null;
     }

@@ -1,7 +1,7 @@
 package com.epam.rd.autotasks;
 
 import static com.epam.rd.autotasks.DecrementingCarousel.isRunning;
-import static com.epam.rd.autotasks.DecrementingCarousel.que;
+import static com.epam.rd.autotasks.DecrementingCarousel.carousalQue;
 
 public class CarouselRun{
     int capacity;
@@ -19,19 +19,19 @@ public class CarouselRun{
 
     public int next() {
         int currentElement = -1 ;
-        if(que.isEmpty())
+        if(carousalQue.isEmpty())
         {
             return currentElement;
         }
         else {
-            currentElement = que.poll();
-            if(!(currentElement-1 <= 0) && !doHalf) que.offer(currentElement-1);
-            else if (!(currentElement-1 <= 0) && doHalf)
+            currentElement = carousalQue.poll();
+            if(!(currentElement-1 <= 0) && !doHalf) carousalQue.offer(currentElement-1);
+            else if (!(currentElement-1 <= 0))
             {
                 int half = currentElement/2;
-                que.offer(half);
+                carousalQue.offer(half);
             }
-            if(que.isEmpty())
+            if(carousalQue.isEmpty())
             {
                 isRunning = false;
                 if(doHalf) doHalf = false;
@@ -41,6 +41,6 @@ public class CarouselRun{
     }
 
     public boolean isFinished() {
-        return que.isEmpty();
+        return carousalQue.isEmpty();
     }
 }
